@@ -1,0 +1,26 @@
+{
+  "manifest_created": "2026-04-10T03:28:59.483211+00:00",
+  "files": {
+    "dataset_01_onc_endeavour.nc": {
+      "filepath": "/Users/nalluraj/Documents/Capstone_Project/source_data/dataset_01_onc_endeavour.nc",
+      "filename": "dataset_01_onc_endeavour.nc",
+      "sha256": "9cdc8c10ec5833b174b539845039bb9a8ec0b17e7c75a7e1ad013bfabfe7f7c1",
+      "size_bytes": 61196,
+      "registered_at": "2026-04-10T03:28:58.209900+00:00"
+    },
+    "dataset_02_noaa_sst_gridded.nc": {
+      "filepath": "/Users/nalluraj/Documents/Capstone_Project/source_data/dataset_02_noaa_sst_gridded.nc",
+      "filename": "dataset_02_noaa_sst_gridded.nc",
+      "sha256": "61512850cc280c99a22231007e7459c49fdb7facacaab1f76edd29d44c726fc9",
+      "size_bytes": 507151768,
+      "registered_at": "2026-04-10T03:28:59.471935+00:00"
+    },
+    "dataset_03_ooi_vent.nc": {
+      "filepath": "/Users/nalluraj/Documents/Capstone_Project/source_data/dataset_03_ooi_vent.nc",
+      "filename": "dataset_03_ooi_vent.nc",
+      "sha256": "d44d75d126cbf0b72942b3fc926c26034e340a741978e80e6beea139a09f4eb9",
+      "size_bytes": 357640,
+      "registered_at": "2026-04-10T03:28:59.480119+00:00"
+    }
+  }
+}

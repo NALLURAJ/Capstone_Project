@@ -1,0 +1,311 @@
+{
+  "dataset_01_onc_endeavour.nc": {
+    "chain": [
+      {
+        "step": 0,
+        "action": "source_ingestion",
+        "source_file": "dataset_01_onc_endeavour.nc",
+        "file_hash": "9cdc8c10ec5833b174b539845039bb9a8ec0b17e7c75a7e1ad013bfabfe7f7c1",
+        "timestamp": "2026-04-10T03:28:58.642747+00:00",
+        "chain_hash": "9cdc8c10ec5833b174b539845039bb9a8ec0b17e7c75a7e1ad013bfabfe7f7c1"
+      },
+      {
+        "step": 1,
+        "action": "transform_Temperature_to_sea_water_temperature",
+        "description": "Identity transform (no change)",
+        "data_hash": "5378b5ba3d4613589100743e1d32dbce4fd37cf57bc77c254ceaf34fb048bb25",
+        "chain_hash": "0961ef2b759c1cf85d8f1cbce2cd399674443f61cdb7612c5ac063152689a932",
+        "timestamp": "2026-04-10T03:28:59.484713+00:00",
+        "metadata": {
+          "source_variable": "Temperature",
+          "target_variable": "sea_water_temperature",
+          "transform": "identity",
+          "source_units": "kelvin",
+          "target_units": "kelvin"
+        }
+      },
+      {
+        "step": 2,
+        "action": "transform_latitude_to_latitude",
+        "description": "Identity transform (no change)",
+        "data_hash": "3f1234fa114853a168d1fdd8ced055b2d787fa56625990fd3097a9aeda0350bc",
+        "chain_hash": "cad4c5b935cf3adb96b13cf23f4f68addc7fae13f4cb536e3bb4b85726b73a24",
+        "timestamp": "2026-04-10T03:28:59.484909+00:00",
+        "metadata": {
+          "source_variable": "latitude",
+          "target_variable": "latitude",
+          "transform": "identity",
+          "source_units": "degrees_north",
+          "target_units": "degrees_north"
+        }
+      },
+      {
+        "step": 3,
+        "action": "transform_longitude_to_longitude",
+        "description": "Identity transform (no change)",
+        "data_hash": "68f2ca515f94f9bbe7181719b83ef3a817560f628d19aa2541e3b8eb0d8efc65",
+        "chain_hash": "429fa1b9396a1b1262e295ebdb5b7363a6f04639a27c3fec2df25abc3e00aef3",
+        "timestamp": "2026-04-10T03:28:59.485059+00:00",
+        "metadata": {
+          "source_variable": "longitude",
+          "target_variable": "longitude",
+          "transform": "identity",
+          "source_units": "degrees_east",
+          "target_units": "degrees_east"
+        }
+      },
+      {
+        "step": 4,
+        "action": "transform_depth_to_depth",
+        "description": "Identity transform (no change)",
+        "data_hash": "d95919015d39e5f7d526f6ddb2a044695f72ffa0b6a3eec3bd88722df6a5d96c",
+        "chain_hash": "7db5a42b5a73ba32c773b860d07c7e556259bdf9a53c8de09b73240ec2c5ca5f",
+        "timestamp": "2026-04-10T03:28:59.485195+00:00",
+        "metadata": {
+          "source_variable": "depth",
+          "target_variable": "depth",
+          "transform": "identity",
+          "source_units": "meters",
+          "target_units": "meters"
+        }
+      },
+      {
+        "step": 5,
+        "action": "transform_time_to_time",
+        "description": "Confirmed datetime64 in UTC (no timezone conversion needed)",
+        "data_hash": "6c9de835ce28cd60a48d1399832f0d34227bb7c05db83d5ab0cad9284a1f6c0e",
+        "chain_hash": "3296971306c2959a0134d1c0d83da5e5bae4df2413f22b557cd33c657c144038",
+        "timestamp": "2026-04-10T03:28:59.485532+00:00",
+        "metadata": {
+          "source_variable": "time",
+          "target_variable": "time",
+          "transform": "ensure_utc",
+          "source_units": "unknown",
+          "target_units": "unknown"
+        }
+      }
+    ],
+    "is_valid": true
+  },
+  "dataset_02_noaa_sst_gridded.nc": {
+    "chain": [
+      {
+        "step": 0,
+        "action": "source_ingestion",
+        "source_file": "dataset_02_noaa_sst_gridded.nc",
+        "file_hash": "61512850cc280c99a22231007e7459c49fdb7facacaab1f76edd29d44c726fc9",
+        "timestamp": "2026-04-10T03:28:59.479118+00:00",
+        "chain_hash": "61512850cc280c99a22231007e7459c49fdb7facacaab1f76edd29d44c726fc9"
+      },
+      {
+        "step": 1,
+        "action": "squeeze_dims",
+        "description": "Squeezed single-element dimensions: ['altitude']",
+        "data_hash": "131d92e97852e383c69b89c52ca5f5dc337bb66d07b656654f624b5cb578891c",
+        "chain_hash": "f3935637f4494b3b9d415b81480cc6dafa15f02b6e0216ecf6d9d1350f110632",
+        "timestamp": "2026-04-10T03:28:59.487185+00:00",
+        "metadata": {
+          "squeezed_dims": [
+            "altitude"
+          ],
+          "remaining_dims": {
+            "time": 1,
+            "latitude": 4401,
+            "longitude": 14400
+          }
+        }
+      },
+      {
+        "step": 2,
+        "action": "subset_region",
+        "description": "Spatial subset to lat [44.0, 52.0], lon [-132.0, -122.0]",
+        "data_hash": "bece8f9b9d939325781d5ccdab3a95273483d5730d76ef8b6a47956bd7df69f8",
+        "chain_hash": "c7311e9781a1e5eca59afba3d2b131f094f0d9c0afbb684688fca708ff21b715",
+        "timestamp": "2026-04-10T03:28:59.487966+00:00",
+        "metadata": {
+          "lat_min": 44.0,
+          "lat_max": 52.0,
+          "lon_min": -132.0,
+          "lon_max": -122.0,
+          "grid_before": 63374400,
+          "grid_after": 128721
+        }
+      },
+      {
+        "step": 3,
+        "action": "flatten_grid",
+        "description": "Flattened gridded data from dims {'time': 1, 'latitude': 321, 'longitude': 401} to tabular (128721 observations)",
+        "data_hash": "8618d553c1ba19d7f04c7136a3484738950028da9a80694be306f80c60d7faaf",
+        "chain_hash": "84d1a2466b18a4c7921a5141f439ab5b1bf8ebd18746f334c0250e81bf1a72d1",
+        "timestamp": "2026-04-10T03:28:59.497754+00:00",
+        "metadata": {
+          "original_dims": {
+            "time": 1,
+            "latitude": 321,
+            "longitude": 401
+          }
+        }
+      },
+      {
+        "step": 4,
+        "action": "transform_sst_to_sea_water_temperature",
+        "description": "Converted Fahrenheit to Kelvin ((value - 32) * 5/9 + 273.15)",
+        "data_hash": "39c6019e2d4da44b8fe83d317446e324897e195d0deec709fdd38434fa51a5a8",
+        "chain_hash": "1da5da2283aee659e2f831536975123b0c5275bd3288940e0431bddd433c3cbb",
+        "timestamp": "2026-04-10T03:28:59.499886+00:00",
+        "metadata": {
+          "source_variable": "sst",
+          "target_variable": "sea_water_temperature",
+          "transform": "fahrenheit_to_kelvin",
+          "source_units": "fahrenheit",
+          "target_units": "kelvin"
+        }
+      },
+      {
+        "step": 5,
+        "action": "transform_latitude_to_latitude",
+        "description": "Identity transform (no change)",
+        "data_hash": "a223e33f6ed021c68d05934a6b6bad83fe18afa36556488f7cfca98823f1756d",
+        "chain_hash": "b059abd2e704257f869da5e75a3789a7049e79faaf8cc9b8a96afb69a24b58f8",
+        "timestamp": "2026-04-10T03:28:59.500817+00:00",
+        "metadata": {
+          "source_variable": "latitude",
+          "target_variable": "latitude",
+          "transform": "identity",
+          "source_units": "degrees_north",
+          "target_units": "degrees_north"
+        }
+      },
+      {
+        "step": 6,
+        "action": "transform_longitude_to_longitude",
+        "description": "Identity transform (no change)",
+        "data_hash": "e3a048a91222b0101ea52ca865c8bcd4de0a11122354d6aa546fba3f6686b785",
+        "chain_hash": "78765f8a196e78253a83f3219265b0fa504f4cd1ca566abd44b9820e990337bf",
+        "timestamp": "2026-04-10T03:28:59.501664+00:00",
+        "metadata": {
+          "source_variable": "longitude",
+          "target_variable": "longitude",
+          "transform": "identity",
+          "source_units": "degrees_east",
+          "target_units": "degrees_east"
+        }
+      },
+      {
+        "step": 7,
+        "action": "transform_time_to_time",
+        "description": "Confirmed datetime64 in UTC (no timezone conversion needed)",
+        "data_hash": "40bfd702a048e3e7121f1b54c05f6e3d429d88418d53fbee6e977143f6eb1ac0",
+        "chain_hash": "f7ca213ee9dc409c86a2497c521d8d0b150588985aeb693b3ae837b9df4c27bd",
+        "timestamp": "2026-04-10T03:28:59.502376+00:00",
+        "metadata": {
+          "source_variable": "time",
+          "target_variable": "time",
+          "transform": "ensure_utc",
+          "source_units": "unknown",
+          "target_units": "unknown"
+        }
+      },
+      {
+        "step": 8,
+        "action": "synthesize_depth",
+        "description": "Created synthetic variable with fill_value=0.0",
+        "data_hash": "ffc12fcf3dc8edd53e91e6cc2a8d1d60bf5ff43867b0172be82509ba5d5af008",
+        "chain_hash": "2a4691dcd749eaa732298096a9db29640223c3c61e073aae97ad1c38d9f065ec",
+        "timestamp": "2026-04-10T03:28:59.503276+00:00",
+        "metadata": {
+          "rationale": "Satellite SST measures sea surface; depth assigned as 0.0m"
+        }
+      }
+    ],
+    "is_valid": true
+  },
+  "dataset_03_ooi_vent.nc": {
+    "chain": [
+      {
+        "step": 0,
+        "action": "source_ingestion",
+        "source_file": "dataset_03_ooi_vent.nc",
+        "file_hash": "d44d75d126cbf0b72942b3fc926c26034e340a741978e80e6beea139a09f4eb9",
+        "timestamp": "2026-04-10T03:28:59.482834+00:00",
+        "chain_hash": "d44d75d126cbf0b72942b3fc926c26034e340a741978e80e6beea139a09f4eb9"
+      },
+      {
+        "step": 1,
+        "action": "transform_sea_water_temperature_01_to_sea_water_temperature",
+        "description": "Converted Celsius to Kelvin (value + 273.15)",
+        "data_hash": "87f416686f18e9fd16275f330f892c51ddfea68291974e8a61b70f22f1ba7555",
+        "chain_hash": "2303e650580c81f194f27386875221f19ef1a816b725e9e8da72aa47b3718ecb",
+        "timestamp": "2026-04-10T03:28:59.516422+00:00",
+        "metadata": {
+          "source_variable": "sea_water_temperature_01",
+          "target_variable": "sea_water_temperature",
+          "transform": "celsius_to_kelvin",
+          "source_units": "celsius",
+          "target_units": "kelvin"
+        }
+      },
+      {
+        "step": 2,
+        "action": "transform_latitude_to_latitude",
+        "description": "Identity transform (no change)",
+        "data_hash": "56203c3af2255844b4b6cb8cd046d978d9946c8977276c32924902d1191f7376",
+        "chain_hash": "2056cc4dd95574557ccb9d19c1a8676115665a543fcf22cbf4153d810efcd278",
+        "timestamp": "2026-04-10T03:28:59.516632+00:00",
+        "metadata": {
+          "source_variable": "latitude",
+          "target_variable": "latitude",
+          "transform": "identity",
+          "source_units": "degrees_north",
+          "target_units": "degrees_north"
+        }
+      },
+      {
+        "step": 3,
+        "action": "transform_longitude_to_longitude",
+        "description": "Identity transform (no change)",
+        "data_hash": "34861578c202af0edd86d6e229ec2b6c6a43c818a62b1d38c0df3ba8a458634b",
+        "chain_hash": "4066dd9e141a1ad86a0f78849d96281038782fbc160234ca193b5854e9e4c1f3",
+        "timestamp": "2026-04-10T03:28:59.516792+00:00",
+        "metadata": {
+          "source_variable": "longitude",
+          "target_variable": "longitude",
+          "transform": "identity",
+          "source_units": "degrees_east",
+          "target_units": "degrees_east"
+        }
+      },
+      {
+        "step": 4,
+        "action": "transform_z_to_depth",
+        "description": "Converted altitude (positive up) to depth (positive down): depth = -altitude",
+        "data_hash": "e25a2628a82c8a44781daf49760d2c11d4e1d6d6b08b06ad0e1df2bad20d1368",
+        "chain_hash": "da187c46e59147180af13ba5c1b725345c506c4a9c50998973f28ae050361ca9",
+        "timestamp": "2026-04-10T03:28:59.517169+00:00",
+        "metadata": {
+          "source_variable": "z",
+          "target_variable": "depth",
+          "transform": "altitude_to_depth",
+          "source_units": "meters",
+          "target_units": "meters"
+        }
+      },
+      {
+        "step": 5,
+        "action": "transform_time_to_time",
+        "description": "Confirmed datetime64 in UTC (no timezone conversion needed)",
+        "data_hash": "c0c33779dbe8bf7cbeb2d2a9ecccedb5c65f76cadc808c650917ab670bd73106",
+        "chain_hash": "82046c09542b2d8aec3b4e8b23d1478f7c2932d2fe7e0822193fb74999ceb5ef",
+        "timestamp": "2026-04-10T03:28:59.517553+00:00",
+        "metadata": {
+          "source_variable": "time",
+          "target_variable": "time",
+          "transform": "ensure_utc",
+          "source_units": "unknown",
+          "target_units": "unknown"
+        }
+      }
+    ],
+    "is_valid": true
+  }
+}

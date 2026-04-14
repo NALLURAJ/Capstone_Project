@@ -1,0 +1,68 @@
+{
+  "pipeline_version": "1.0.0",
+  "started_at": "2026-04-10T03:28:57.246273+00:00",
+  "config_file": "/Users/nalluraj/Documents/Capstone_Project/pipeline/configs/dataset_mappings.yaml",
+  "source_dir": "/Users/nalluraj/Documents/Capstone_Project/source_data",
+  "output_dir": "/Users/nalluraj/Documents/Capstone_Project/output/zarr_store",
+  "steps": [
+    {
+      "step": 1,
+      "name": "load_config",
+      "duration_s": 0.011,
+      "datasets_configured": [
+        "dataset_01_onc_endeavour",
+        "dataset_02_noaa_sst_gridded",
+        "dataset_03_ooi_vent"
+      ]
+    },
+    {
+      "step": 2,
+      "name": "ingest",
+      "duration_s": 2.226,
+      "datasets_ingested": [
+        "dataset_01_onc_endeavour",
+        "dataset_02_noaa_sst_gridded",
+        "dataset_03_ooi_vent"
+      ],
+      "source_hashes": {
+        "dataset_01_onc_endeavour.nc": "9cdc8c10ec5833b174b539845039bb9a8ec0b17e7c75a7e1ad013bfabfe7f7c1",
+        "dataset_02_noaa_sst_gridded.nc": "61512850cc280c99a22231007e7459c49fdb7facacaab1f76edd29d44c726fc9",
+        "dataset_03_ooi_vent.nc": "d44d75d126cbf0b72942b3fc926c26034e340a741978e80e6beea139a09f4eb9"
+      }
+    },
+    {
+      "step": 3,
+      "name": "harmonize",
+      "duration_s": 0.035,
+      "datasets_harmonized": [
+        "dataset_01_onc_endeavour",
+        "dataset_02_noaa_sst_gridded",
+        "dataset_03_ooi_vent"
+      ],
+      "observations_per_dataset": {
+        "dataset_01_onc_endeavour": 1020,
+        "dataset_02_noaa_sst_gridded": 71770,
+        "dataset_03_ooi_vent": 4321
+      }
+    },
+    {
+      "step": 4,
+      "name": "write_zarr",
+      "duration_s": 0.212,
+      "zarr_path": "/Users/nalluraj/Documents/Capstone_Project/output/zarr_store/harmonized.zarr"
+    },
+    {
+      "step": 5,
+      "name": "verify_integrity",
+      "duration_s": 0.414,
+      "all_sources_intact": true,
+      "per_file": {
+        "dataset_01_onc_endeavour.nc": true,
+        "dataset_02_noaa_sst_gridded.nc": true,
+        "dataset_03_ooi_vent.nc": true
+      }
+    }
+  ],
+  "finished_at": "2026-04-10T03:29:00.145910+00:00",
+  "status": "SUCCESS"
+}

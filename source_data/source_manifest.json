@@ -1,0 +1,10 @@
+{
+  "download_timestamp": "2026-04-09T06:34:52.146849+00:00",
+  "files": {
+    "dataset_02_noaa_sst_gridded.nc": {
+      "path": "/Users/nalluraj/Documents/Capstone_Project/source_data/dataset_02_noaa_sst_gridded.nc",
+      "sha256": "a86ea6063b98a0f23f9ea6d667614b19cc9bf582915840c2c179e4f984d2d2b5",
+      "size_bytes": 6584
+    }
+  }
+}

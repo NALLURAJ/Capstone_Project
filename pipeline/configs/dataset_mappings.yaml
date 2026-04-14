@@ -1,0 +1,239 @@
+# =============================================================================
+# Dataset Harmonization Mappings
+# =============================================================================
+# KEY DESIGN PRINCIPLE (answers the Guiding Question):
+#   To change how a variable is interpreted (its meaning, unit, aggregation),
+#   you ONLY edit this file. No ingestion code changes needed.
+#   No source data modifications needed.
+#
+# Canonical Schema (what the harmonized output looks like):
+#   - sea_water_temperature  (Kelvin)
+#   - latitude               (degrees_north, WGS84)
+#   - longitude              (degrees_east, WGS84)
+#   - depth                  (meters, positive down)
+#   - time                   (datetime64[ns], UTC)
+#
+# REAL DATASETS (downloaded from ERDDAP April 2026):
+#   Dataset 01: Ocean Networks Canada - Endeavour South Current Meter
+#               Variable: Temperature  Units: Kelvin (K)
+#               Location: 47.93N, 129.11W  Depth: 1966m
+#
+#   Dataset 02: NOAA CoastWatch - MODIS Aqua SST 8-day composite
+#               Variable: sst  Units: Fahrenheit (degree_F)
+#               Coverage: Global gridded 0.025deg  Subset: NE Pacific
+#
+#   Dataset 03: Ocean Observatories Initiative - Regional Cabled Array
+#               Variable: sea_water_temperature_01  Units: Celsius (degree_Celsius)
+#               Location: 45.93N, 129.98W  Altitude: 0m (seafloor)
+# =============================================================================
+
+canonical_schema:
+  variables:
+    sea_water_temperature:
+      standard_name: "sea_water_temperature"
+      units: "kelvin"
+      dtype: "float64"
+      valid_range: [270.0, 320.0]   # -3°C to 47°C in Kelvin
+      description: "Temperature of sea water, harmonized to Kelvin"
+    latitude:
+      standard_name: "latitude"
+      units: "degrees_north"
+      dtype: "float64"
+      valid_range: [-90.0, 90.0]
+    longitude:
+      standard_name: "longitude"
+      units: "degrees_east"
+      dtype: "float64"
+      valid_range: [-180.0, 180.0]
+    depth:
+      standard_name: "depth"
+      units: "meters"
+      dtype: "float64"
+      valid_range: [0.0, 12000.0]
+      positive: "down"
+      description: "Depth below sea surface. 0.0 for surface/altitude measurements."
+    time:
+      standard_name: "time"
+      units: "datetime64[ns]"
+      timezone: "UTC"
+
+# =============================================================================
+# Per-dataset mapping rules
+# =============================================================================
+datasets:
+
+  # ---------------------------------------------------------------------------
+  # Dataset 01: Ocean Networks Canada - Endeavour South
+  # Variable 'Temperature' is ALREADY in Kelvin (unusual - most CTDs use °C)
+  # No unit conversion needed — identity transform
+  # ---------------------------------------------------------------------------
+  dataset_01_onc_endeavour:
+    source_file: "dataset_01_onc_endeavour.nc"
+    institution: "Ocean Networks Canada"
+    platform: "fixed_subsea_sensor"
+    platform_description: "Nortek Aquadopp Current Meter at Endeavour South hydrothermal vent area"
+    region: "NE Pacific, Endeavour Ridge, 47.93N 129.11W, depth 1966m"
+
+    variable_mappings:
+      Temperature:
+        target: "sea_water_temperature"
+        source_units: "kelvin"          # Already in Kelvin - no conversion
+        target_units: "kelvin"
+        transform: "identity"           # identity = pass through unchanged
+      latitude:
+        target: "latitude"
+        source_units: "degrees_north"
+        target_units: "degrees_north"
+        transform: "identity"
+      longitude:
+        target: "longitude"
+        source_units: "degrees_east"
+        target_units: "degrees_east"
+        transform: "identity"
+      depth:
+        target: "depth"
+        source_units: "meters"
+        target_units: "meters"
+        transform: "identity"
+      time:
+        target: "time"
+        source_format: "datetime64"
+        timezone: "UTC"
+        transform: "ensure_utc"
+
+    drop_variables:
+      - "timeseries_id"
+
+  # ---------------------------------------------------------------------------
+  # Dataset 02: NOAA CoastWatch - MODIS Aqua SST (Gridded Satellite)
+  # Variable 'sst' is in FAHRENHEIT (degree_F) — must convert to Kelvin
+  # Structure is 4D grid: (time, altitude, latitude, longitude)
+  # Must squeeze altitude, subset to NE Pacific, then flatten to rows
+  # File is 507MB globally — spatial subset is REQUIRED to avoid memory crash
+  # ---------------------------------------------------------------------------
+  dataset_02_noaa_sst_gridded:
+    source_file: "dataset_02_noaa_sst_gridded.nc"
+    institution: "NOAA NMFS SWFSC ERD / CoastWatch"
+    platform: "satellite_derived"
+    platform_description: "MODIS Aqua 8-day composite SST, 0.025 degree resolution"
+    region: "NE Pacific subset: 44N-52N, 132W-122W"
+
+    variable_mappings:
+      sst:
+        target: "sea_water_temperature"
+        source_units: "fahrenheit"       # degree_F - unusual for ocean data!
+        target_units: "kelvin"
+        transform: "fahrenheit_to_kelvin"
+      latitude:
+        target: "latitude"
+        source_units: "degrees_north"
+        target_units: "degrees_north"
+        transform: "identity"
+      longitude:
+        target: "longitude"
+        source_units: "degrees_east"
+        target_units: "degrees_east"
+        transform: "identity"
+      time:
+        target: "time"
+        source_format: "datetime64"
+        timezone: "UTC"
+        transform: "ensure_utc"
+
+    # No depth in satellite data — assign surface value
+    synthetic_variables:
+      depth:
+        target: "depth"
+        fill_value: 0.0
+        units: "meters"
+        rationale: "Satellite SST measures sea surface; depth assigned as 0.0m"
+
+    preprocessing:
+      # CRITICAL: Squeeze the altitude dimension (size=1) before flattening
+      squeeze_dims: ["altitude"]
+      # Subset to NE Pacific to avoid loading 63 million global rows
+      subset_region:
+        lat_min: 44.0
+        lat_max: 52.0
+        lon_min: -132.0
+        lon_max: -122.0
+      # Flatten 3D grid (time x lat x lon) into tabular rows
+      flatten_grid: true
+      # Remove NaN rows (land, clouds) and physically impossible values
+      drop_nan_temperature: true
+      drop_extreme_temperature: true   # Removes fill-value artifacts
+
+    drop_variables: []
+
+  # ---------------------------------------------------------------------------
+  # Dataset 03: Ocean Observatories Initiative - Regional Cabled Array
+  # Variable is 'sea_water_temperature_01' in Celsius (third different name!)
+  # Uses 'z' column (altitude, positive up) instead of 'depth'
+  # z=0 means at seafloor altitude reference — mapped to depth with negation
+  # ---------------------------------------------------------------------------
+  dataset_03_ooi_vent:
+    source_file: "dataset_03_ooi_vent.nc"
+    institution: "Ocean Observatories Initiative (OOI)"
+    platform: "cabled_seafloor_sensor"
+    platform_description: "Regional Cabled Array - International District Vent Field 1, MJ03C Temperature Sensor"
+    region: "NE Pacific, Axial Seamount area, 45.93N 129.98W"
+
+    variable_mappings:
+      sea_water_temperature_01:
+        target: "sea_water_temperature"
+        source_units: "celsius"          # degree_Celsius
+        target_units: "kelvin"
+        transform: "celsius_to_kelvin"
+      latitude:
+        target: "latitude"
+        source_units: "degrees_north"
+        target_units: "degrees_north"
+        transform: "identity"
+      longitude:
+        target: "longitude"
+        source_units: "degrees_east"
+        target_units: "degrees_east"
+        transform: "identity"
+      z:
+        target: "depth"
+        source_units: "meters"           # altitude positive up
+        target_units: "meters"
+        transform: "altitude_to_depth"   # negates: depth = -altitude
+      time:
+        target: "time"
+        source_format: "datetime64"
+        timezone: "UTC"
+        transform: "ensure_utc"
+
+    drop_variables:
+      - "sea_water_temperature_01_qc_agg"
+      - "sea_water_temperature_01_qc_tests"
+      - "sea_water_temperature_02"
+      - "sea_water_temperature_02_qc_agg"
+      - "sea_water_temperature_02_qc_tests"
+      - "sea_water_temperature_03"
+      - "sea_water_temperature_03_qc_agg"
+      - "sea_water_temperature_03_qc_tests"
+
+# =============================================================================
+# Transform registry
+# =============================================================================
+transforms_registry:
+  identity:
+    description: "No transformation — value passes through unchanged"
+    function: "transform_identity"
+  celsius_to_kelvin:
+    description: "Convert Celsius to Kelvin: value + 273.15"
+    function: "transform_celsius_to_kelvin"
+    formula: "value + 273.15"
+  fahrenheit_to_kelvin:
+    description: "Convert Fahrenheit to Kelvin: (value - 32) * 5/9 + 273.15"
+    function: "transform_fahrenheit_to_kelvin"
+    formula: "(value - 32) * 5/9 + 273.15"
+  altitude_to_depth:
+    description: "Convert altitude (positive up) to depth (positive down): depth = -altitude"
+    function: "transform_altitude_to_depth"
+    formula: "-value"
+  ensure_utc:
+    description: "Ensure timestamp is in UTC"
+    function: "transform_ensure_utc"

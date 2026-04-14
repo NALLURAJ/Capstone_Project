@@ -1,0 +1,425 @@
+{
+  "report_generated": "2026-04-10T03:28:59.729471+00:00",
+  "total_datasets": 3,
+  "datasets": {
+    "dataset_01_onc_endeavour": {
+      "record_id": "d6aa0615-2944-4731-8586-c316b61ebdb6",
+      "dataset_id": "dataset_01_onc_endeavour",
+      "created_at": "2026-04-10T03:28:58.642781+00:00",
+      "entity": {
+        "dataset_id": "dataset_01_onc_endeavour",
+        "source_file": "dataset_01_onc_endeavour.nc",
+        "institution": "Ocean Networks Canada",
+        "platform": "fixed_subsea_sensor",
+        "ownership": "Ocean Networks Canada"
+      },
+      "activities": [
+        {
+          "activity_id": "e447cbad-a039-4e25-b502-de2ea173e512",
+          "name": "harmonize_Temperature",
+          "description": "Identity transform (no change)",
+          "input_variables": [
+            "Temperature"
+          ],
+          "output_variables": [
+            "sea_water_temperature"
+          ],
+          "transform_applied": "identity",
+          "parameters": {
+            "source_units": "kelvin",
+            "target_units": "kelvin"
+          },
+          "timestamp": "2026-04-10T03:28:59.484738+00:00"
+        },
+        {
+          "activity_id": "a017cff7-7ce7-49a8-91fa-0e1a84cfe6b6",
+          "name": "harmonize_latitude",
+          "description": "Identity transform (no change)",
+          "input_variables": [
+            "latitude"
+          ],
+          "output_variables": [
+            "latitude"
+          ],
+          "transform_applied": "identity",
+          "parameters": {
+            "source_units": "degrees_north",
+            "target_units": "degrees_north"
+          },
+          "timestamp": "2026-04-10T03:28:59.484923+00:00"
+        },
+        {
+          "activity_id": "7520ca08-11c3-4f23-93bd-387e9900caa5",
+          "name": "harmonize_longitude",
+          "description": "Identity transform (no change)",
+          "input_variables": [
+            "longitude"
+          ],
+          "output_variables": [
+            "longitude"
+          ],
+          "transform_applied": "identity",
+          "parameters": {
+            "source_units": "degrees_east",
+            "target_units": "degrees_east"
+          },
+          "timestamp": "2026-04-10T03:28:59.485070+00:00"
+        },
+        {
+          "activity_id": "aa0e401d-b39e-40be-9df4-6d0bd06d9031",
+          "name": "harmonize_depth",
+          "description": "Identity transform (no change)",
+          "input_variables": [
+            "depth"
+          ],
+          "output_variables": [
+            "depth"
+          ],
+          "transform_applied": "identity",
+          "parameters": {
+            "source_units": "meters",
+            "target_units": "meters"
+          },
+          "timestamp": "2026-04-10T03:28:59.485205+00:00"
+        },
+        {
+          "activity_id": "a1e2ffda-8895-4074-aa49-ca7c1215d176",
+          "name": "harmonize_time",
+          "description": "Confirmed datetime64 in UTC (no timezone conversion needed)",
+          "input_variables": [
+            "time"
+          ],
+          "output_variables": [
+            "time"
+          ],
+          "transform_applied": "ensure_utc",
+          "parameters": {
+            "source_units": null,
+            "target_units": null
+          },
+          "timestamp": "2026-04-10T03:28:59.485546+00:00"
+        }
+      ],
+      "derivations": [
+        {
+          "source_variable": "Temperature",
+          "source_dataset": "dataset_01_onc_endeavour",
+          "derived_variable": "sea_water_temperature",
+          "activity_id": "e447cbad-a039-4e25-b502-de2ea173e512",
+          "timestamp": "2026-04-10T03:28:59.484744+00:00"
+        },
+        {
+          "source_variable": "latitude",
+          "source_dataset": "dataset_01_onc_endeavour",
+          "derived_variable": "latitude",
+          "activity_id": "a017cff7-7ce7-49a8-91fa-0e1a84cfe6b6",
+          "timestamp": "2026-04-10T03:28:59.484927+00:00"
+        },
+        {
+          "source_variable": "longitude",
+          "source_dataset": "dataset_01_onc_endeavour",
+          "derived_variable": "longitude",
+          "activity_id": "7520ca08-11c3-4f23-93bd-387e9900caa5",
+          "timestamp": "2026-04-10T03:28:59.485073+00:00"
+        },
+        {
+          "source_variable": "depth",
+          "source_dataset": "dataset_01_onc_endeavour",
+          "derived_variable": "depth",
+          "activity_id": "aa0e401d-b39e-40be-9df4-6d0bd06d9031",
+          "timestamp": "2026-04-10T03:28:59.485208+00:00"
+        },
+        {
+          "source_variable": "time",
+          "source_dataset": "dataset_01_onc_endeavour",
+          "derived_variable": "time",
+          "activity_id": "a1e2ffda-8895-4074-aa49-ca7c1215d176",
+          "timestamp": "2026-04-10T03:28:59.485550+00:00"
+        }
+      ]
+    },
+    "dataset_02_noaa_sst_gridded": {
+      "record_id": "e6e0afa8-3d6b-49b6-8120-4e37460078ca",
+      "dataset_id": "dataset_02_noaa_sst_gridded",
+      "created_at": "2026-04-10T03:28:59.479150+00:00",
+      "entity": {
+        "dataset_id": "dataset_02_noaa_sst_gridded",
+        "source_file": "dataset_02_noaa_sst_gridded.nc",
+        "institution": "NOAA NMFS SWFSC ERD / CoastWatch",
+        "platform": "satellite_derived",
+        "ownership": "NOAA NMFS SWFSC ERD / CoastWatch"
+      },
+      "activities": [
+        {
+          "activity_id": "cee240b0-4bd4-4613-9cba-85d81fc4b201",
+          "name": "harmonize_sst",
+          "description": "Converted Fahrenheit to Kelvin ((value - 32) * 5/9 + 273.15)",
+          "input_variables": [
+            "sst"
+          ],
+          "output_variables": [
+            "sea_water_temperature"
+          ],
+          "transform_applied": "fahrenheit_to_kelvin",
+          "parameters": {
+            "source_units": "fahrenheit",
+            "target_units": "kelvin"
+          },
+          "timestamp": "2026-04-10T03:28:59.499911+00:00"
+        },
+        {
+          "activity_id": "04d6b150-342d-4a78-8fd3-5c2a953f9040",
+          "name": "harmonize_latitude",
+          "description": "Identity transform (no change)",
+          "input_variables": [
+            "latitude"
+          ],
+          "output_variables": [
+            "latitude"
+          ],
+          "transform_applied": "identity",
+          "parameters": {
+            "source_units": "degrees_north",
+            "target_units": "degrees_north"
+          },
+          "timestamp": "2026-04-10T03:28:59.500842+00:00"
+        },
+        {
+          "activity_id": "d5fee3c8-c20e-441d-a77d-6f9140958421",
+          "name": "harmonize_longitude",
+          "description": "Identity transform (no change)",
+          "input_variables": [
+            "longitude"
+          ],
+          "output_variables": [
+            "longitude"
+          ],
+          "transform_applied": "identity",
+          "parameters": {
+            "source_units": "degrees_east",
+            "target_units": "degrees_east"
+          },
+          "timestamp": "2026-04-10T03:28:59.501676+00:00"
+        },
+        {
+          "activity_id": "7a13a206-2a4c-4027-a24c-49339b04fda6",
+          "name": "harmonize_time",
+          "description": "Confirmed datetime64 in UTC (no timezone conversion needed)",
+          "input_variables": [
+            "time"
+          ],
+          "output_variables": [
+            "time"
+          ],
+          "transform_applied": "ensure_utc",
+          "parameters": {
+            "source_units": null,
+            "target_units": null
+          },
+          "timestamp": "2026-04-10T03:28:59.502385+00:00"
+        },
+        {
+          "activity_id": "693afb4c-1b66-4ddb-8f6a-527cd639408e",
+          "name": "synthesize_depth",
+          "description": "Synthetic variable: Satellite SST measures sea surface; depth assigned as 0.0m",
+          "input_variables": [],
+          "output_variables": [
+            "depth"
+          ],
+          "transform_applied": "synthetic_fill",
+          "parameters": {
+            "fill_value": 0.0
+          },
+          "timestamp": "2026-04-10T03:28:59.502431+00:00"
+        }
+      ],
+      "derivations": [
+        {
+          "source_variable": "sst",
+          "source_dataset": "dataset_02_noaa_sst_gridded",
+          "derived_variable": "sea_water_temperature",
+          "activity_id": "cee240b0-4bd4-4613-9cba-85d81fc4b201",
+          "timestamp": "2026-04-10T03:28:59.499915+00:00"
+        },
+        {
+          "source_variable": "latitude",
+          "source_dataset": "dataset_02_noaa_sst_gridded",
+          "derived_variable": "latitude",
+          "activity_id": "04d6b150-342d-4a78-8fd3-5c2a953f9040",
+          "timestamp": "2026-04-10T03:28:59.500847+00:00"
+        },
+        {
+          "source_variable": "longitude",
+          "source_dataset": "dataset_02_noaa_sst_gridded",
+          "derived_variable": "longitude",
+          "activity_id": "d5fee3c8-c20e-441d-a77d-6f9140958421",
+          "timestamp": "2026-04-10T03:28:59.501678+00:00"
+        },
+        {
+          "source_variable": "time",
+          "source_dataset": "dataset_02_noaa_sst_gridded",
+          "derived_variable": "time",
+          "activity_id": "7a13a206-2a4c-4027-a24c-49339b04fda6",
+          "timestamp": "2026-04-10T03:28:59.502387+00:00"
+        },
+        {
+          "source_variable": "<synthetic>",
+          "source_dataset": "dataset_02_noaa_sst_gridded",
+          "derived_variable": "depth",
+          "activity_id": "693afb4c-1b66-4ddb-8f6a-527cd639408e",
+          "timestamp": "2026-04-10T03:28:59.502434+00:00"
+        }
+      ]
+    },
+    "dataset_03_ooi_vent": {
+      "record_id": "411d218a-1f83-4621-9144-cf4690af01b9",
+      "dataset_id": "dataset_03_ooi_vent",
+      "created_at": "2026-04-10T03:28:59.482848+00:00",
+      "entity": {
+        "dataset_id": "dataset_03_ooi_vent",
+        "source_file": "dataset_03_ooi_vent.nc",
+        "institution": "Ocean Observatories Initiative (OOI)",
+        "platform": "cabled_seafloor_sensor",
+        "ownership": "Ocean Observatories Initiative (OOI)"
+      },
+      "activities": [
+        {
+          "activity_id": "889f0644-dcc1-4d52-baab-88a66240fddc",
+          "name": "harmonize_sea_water_temperature_01",
+          "description": "Converted Celsius to Kelvin (value + 273.15)",
+          "input_variables": [
+            "sea_water_temperature_01"
+          ],
+          "output_variables": [
+            "sea_water_temperature"
+          ],
+          "transform_applied": "celsius_to_kelvin",
+          "parameters": {
+            "source_units": "celsius",
+            "target_units": "kelvin"
+          },
+          "timestamp": "2026-04-10T03:28:59.516448+00:00"
+        },
+        {
+          "activity_id": "6b99748a-094b-49fa-91e5-35d528deb491",
+          "name": "harmonize_latitude",
+          "description": "Identity transform (no change)",
+          "input_variables": [
+            "latitude"
+          ],
+          "output_variables": [
+            "latitude"
+          ],
+          "transform_applied": "identity",
+          "parameters": {
+            "source_units": "degrees_north",
+            "target_units": "degrees_north"
+          },
+          "timestamp": "2026-04-10T03:28:59.516644+00:00"
+        },
+        {
+          "activity_id": "f0e1247f-21b7-4ff3-88eb-da5232d72ae5",
+          "name": "harmonize_longitude",
+          "description": "Identity transform (no change)",
+          "input_variables": [
+            "longitude"
+          ],
+          "output_variables": [
+            "longitude"
+          ],
+          "transform_applied": "identity",
+          "parameters": {
+            "source_units": "degrees_east",
+            "target_units": "degrees_east"
+          },
+          "timestamp": "2026-04-10T03:28:59.516802+00:00"
+        },
+        {
+          "activity_id": "10e7e65a-4b8c-461f-938c-ed006bfc877d",
+          "name": "harmonize_z",
+          "description": "Converted altitude (positive up) to depth (positive down): depth = -altitude",
+          "input_variables": [
+            "z"
+          ],
+          "output_variables": [
+            "depth"
+          ],
+          "transform_applied": "altitude_to_depth",
+          "parameters": {
+            "source_units": "meters",
+            "target_units": "meters"
+          },
+          "timestamp": "2026-04-10T03:28:59.517182+00:00"
+        },
+        {
+          "activity_id": "e583918d-0867-4756-82fc-0fe25643742e",
+          "name": "harmonize_time",
+          "description": "Confirmed datetime64 in UTC (no timezone conversion needed)",
+          "input_variables": [
+            "time"
+          ],
+          "output_variables": [
+            "time"
+          ],
+          "transform_applied": "ensure_utc",
+          "parameters": {
+            "source_units": null,
+            "target_units": null
+          },
+          "timestamp": "2026-04-10T03:28:59.517563+00:00"
+        }
+      ],
+      "derivations": [
+        {
+          "source_variable": "sea_water_temperature_01",
+          "source_dataset": "dataset_03_ooi_vent",
+          "derived_variable": "sea_water_temperature",
+          "activity_id": "889f0644-dcc1-4d52-baab-88a66240fddc",
+          "timestamp": "2026-04-10T03:28:59.516452+00:00"
+        },
+        {
+          "source_variable": "latitude",
+          "source_dataset": "dataset_03_ooi_vent",
+          "derived_variable": "latitude",
+          "activity_id": "6b99748a-094b-49fa-91e5-35d528deb491",
+          "timestamp": "2026-04-10T03:28:59.516647+00:00"
+        },
+        {
+          "source_variable": "longitude",
+          "source_dataset": "dataset_03_ooi_vent",
+          "derived_variable": "longitude",
+          "activity_id": "f0e1247f-21b7-4ff3-88eb-da5232d72ae5",
+          "timestamp": "2026-04-10T03:28:59.516805+00:00"
+        },
+        {
+          "source_variable": "z",
+          "source_dataset": "dataset_03_ooi_vent",
+          "derived_variable": "depth",
+          "activity_id": "10e7e65a-4b8c-461f-938c-ed006bfc877d",
+          "timestamp": "2026-04-10T03:28:59.517185+00:00"
+        },
+        {
+          "source_variable": "time",
+          "source_dataset": "dataset_03_ooi_vent",
+          "derived_variable": "time",
+          "activity_id": "e583918d-0867-4756-82fc-0fe25643742e",
+          "timestamp": "2026-04-10T03:28:59.517566+00:00"
+        }
+      ]
+    }
+  },
+  "global_log": [
+    {
+      "timestamp": "2026-04-10T03:28:58.642788+00:00",
+      "message": "Registered dataset: dataset_01_onc_endeavour from dataset_01_onc_endeavour.nc"
+    },
+    {
+      "timestamp": "2026-04-10T03:28:59.479157+00:00",
+      "message": "Registered dataset: dataset_02_noaa_sst_gridded from dataset_02_noaa_sst_gridded.nc"
+    },
+    {
+      "timestamp": "2026-04-10T03:28:59.482852+00:00",
+      "message": "Registered dataset: dataset_03_ooi_vent from dataset_03_ooi_vent.nc"
+    }
+  ]
+}
