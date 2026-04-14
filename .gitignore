@@ -1,2 +1,4 @@
 .DS_Store
 source_data/
+source_data/*.nc
+source_data/source_manifest.json
